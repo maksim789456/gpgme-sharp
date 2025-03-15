@@ -27,8 +27,7 @@ jobs:
       - name: Pack project
         run: |
           versionTag='${{ github.ref_name }}'
-          dotnet pack gpgme-sharp/gpgme-sharp.csproj --no-build --configuration Release --output ${{ github.workspace }}/artifacts --version-suffix=$versionTag
-
+          dotnet pack gpgme-sharp/gpgme-sharp.csproj --no-build --configuration Release --output ${{ github.workspace }}/artifacts -p:Version=$versionTag
       - name: Publish to GitHub Packages
         run: |
           dotnet nuget push ${{ github.workspace }}/artifacts/*.nupkg \
