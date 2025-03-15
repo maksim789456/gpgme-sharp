@@ -39,8 +39,26 @@ namespace Libgpgme.Interop
            True if subkey is qualified for signatures according to German law. 512 
               unsigned int is_qualified : 1;
 
+           True if the secret key is stored on a smart card. 1024
+              unsigned int is_cardkey : 1;
+
+           True if the key is compliant to the de-vs mode. 2048
+              unsigned int is_de_vs : 1;
+
+           True if the key can be used for restricted encryption (ADSK). 4096
+              unsigned int can_renc : 1;
+
+           True if the key can be used for timestamping. 8192
+              unsigned int can_timestamp : 1;
+
+           True if the private key is possessed by more than one person. 16384
+              unsigned int is_group_owned : 1;
+
+           The compliance mode (is_de_vs) has not yet been approved. 32768
+              unsigned int beta_compliance : 1;
+
            Internal to GPGME, do not use.  
-              unsigned int _unused : 22;
+              unsigned int _unused : 16;
          */
         public uint flags;
 
@@ -75,108 +93,104 @@ namespace Libgpgme.Interop
         /* The keygrip of the subkey in hex digit form or NULL if not available. */
         public IntPtr keygrip; // char*
 
-        public bool revoked {
-            get => ((flags & 1) > 0);
-            set {
-                if (value) {
-                    flags |= 1;
-                } else {
-                    flags &= (~(uint) 1);
-                }
-            }
-        }
-        public bool expired {
-            get => ((flags & 2) > 0);
-            set {
-                if (value) {
-                    flags |= 2;
-                } else {
-                    flags &= (~(uint) 2);
-                }
-            }
-        }
-        public bool disabled {
-            get => ((flags & 4) > 0);
-            set {
-                if (value) {
-                    flags |= 4;
-                } else {
-                    flags &= (~(uint) 4);
-                }
-            }
-        }
-        public bool invalid {
-            get => ((flags & 8) > 0);
-            set {
-                if (value) {
-                    flags |= 8;
-                } else {
-                    flags &= (~(uint) 8);
-                }
-            }
-        }
-        public bool can_encrypt {
-            get => ((flags & 16) > 0);
-            set {
-                if (value) {
-                    flags |= 16;
-                } else {
-                    flags &= (~(uint) 16);
-                }
-            }
-        }
-        public bool can_sign {
-            get => ((flags & 32) > 0);
-            set {
-                if (value) {
-                    flags |= 32;
-                } else {
-                    flags &= (~(uint) 32);
-                }
-            }
-        }
-        public bool can_certify {
-            get => ((flags & 64) > 0);
-            set {
-                if (value) {
-                    flags |= 64;
-                } else {
-                    flags &= (~(uint) 64);
-                }
-            }
-        }
-        public bool secret {
-            get => ((flags & 128) > 0);
-            set {
-                if (value) {
-                    flags |= 128;
-                } else {
-                    flags &= (~(uint) 128);
-                }
-            }
-        }
-        public bool can_authenticate {
-            get => ((flags & 256) > 0);
-            set {
-                if (value) {
-                    flags |= 256;
-                } else {
-                    flags &= (~(uint) 256);
-                }
-            }
-        }
-        public bool is_qualified {
-            get => ((flags & 512) > 0);
-            set {
-                if (value) {
-                    flags |= 512;
-                } else {
-                    flags &= (~(uint) 512);
-                }
-            }
+        public bool revoked
+        {
+            get => (flags & 1) > 0;
+            set => flags = value ? flags | 1 : flags & ~1u;
         }
 
-        public _gpgme_subkey() {
+        public bool expired
+        {
+            get => (flags & 2) > 0;
+            set => flags = value ? flags | 2 : flags & ~2u;
+        }
+
+        public bool disabled
+        {
+            get => (flags & 4) > 0;
+            set => flags = value ? flags | 4 : flags & ~4u;
+        }
+
+        public bool invalid
+        {
+            get => (flags & 8) > 0;
+            set => flags = value ? flags | 8 : flags & ~8u;
+        }
+
+        public bool can_encrypt
+        {
+            get => (flags & 16) > 0;
+            set => flags = value ? flags | 16 : flags & ~16u;
+        }
+
+        public bool can_sign
+        {
+            get => (flags & 32) > 0;
+            set => flags = value ? flags | 32 : flags & ~32u;
+        }
+
+        public bool can_certify
+        {
+            get => (flags & 64) > 0;
+            set => flags = value ? flags | 64 : flags & ~64u;
+        }
+
+        public bool secret
+        {
+            get => (flags & 128) > 0;
+            set => flags = value ? flags | 128 : flags & ~128u;
+        }
+
+        public bool can_authenticate
+        {
+            get => (flags & 256) > 0;
+            set => flags = value ? flags | 256 : flags & ~256u;
+        }
+
+        public bool is_qualified
+        {
+            get => (flags & 512) > 0;
+            set => flags = value ? flags | 512 : flags & ~512u;
+        }
+
+        public bool is_cardkey
+        {
+            get => (flags & 1024) > 0;
+            set => flags = value ? flags | 1024 : flags & ~1024u;
+        }
+
+        public bool is_de_vs
+        {
+            get => (flags & 2048) > 0;
+            set => flags = value ? flags | 2048 : flags & ~2048u;
+        }
+
+        public bool can_renc
+        {
+            get => (flags & 4096) > 0;
+            set => flags = value ? flags | 4096 : flags & ~4096u;
+        }
+
+        public bool can_timestamp
+        {
+            get => (flags & 8192) > 0;
+            set => flags = value ? flags | 8192 : flags & ~8192u;
+        }
+
+        public bool is_group_owned
+        {
+            get => (flags & 16384) > 0;
+            set => flags = value ? flags | 16384 : flags & ~16384u;
+        }
+
+        public bool beta_compliance
+        {
+            get => (flags & 32768) > 0;
+            set => flags = value ? flags | 32768 : flags & ~32768u;
+        }
+
+        public _gpgme_subkey()
+        {
             _keyid = new byte[17];
         }
     }

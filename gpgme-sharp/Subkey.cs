@@ -36,6 +36,11 @@ namespace Libgpgme
         public bool Secret { get; private set; }
         public bool CanAuthenticate { get; private set; }
         public bool IsQualified { get; private set; }
+        public bool IsCardKey { get; private set; }
+        public bool IsDeVs { get; private set; }
+        public bool CanRenc { get; private set; }
+        public bool IsGroupOwned { get; private set; }
+        public bool BetaCompliance { get; private set; }
         public KeyAlgorithm PubkeyAlgorithm { get; private set; }
         public long Length { get; private set; }
 
@@ -111,6 +116,11 @@ namespace Libgpgme
             CanAuthenticate = subkey.can_authenticate;
             IsQualified = subkey.is_qualified;
             Secret = subkey.secret;
+            IsCardKey = subkey.is_cardkey;
+            IsDeVs = subkey.is_de_vs;
+            CanRenc = subkey.can_renc;
+            IsGroupOwned = subkey.is_group_owned;
+            BetaCompliance = subkey.beta_compliance;
 
             PubkeyAlgorithm = (KeyAlgorithm) subkey.pubkey_algo;
             Length = subkey.length;
