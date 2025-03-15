@@ -31,8 +31,18 @@ namespace Libgpgme.Interop
         uint can_authenticate : 1;
            True if subkey is qualified for signatures according to German law.  512
         uint is_qualified : 1;
-           Internal to GPGME, do not use.  
-        uint _unused : 22; */
+           This is true if the key or one of its subkeys is capable of encryption. 1024
+        uint has_encrypt : 1;
+           This is true if the key or one of its subkeys is capable of signing. 2048
+        uint has_sign : 1;
+           This is true if the key or one of its subkeys is capable of certification. 4096
+        uint has_certify : 1;
+           This is true if the key or one of its subkeys is capable of authentication. 8192
+        uint has_authenticate : 1;
+           Internal to GPGME, do not use.
+        uint _unused : 13;
+           Origin of this key. 0xf8000000
+        uint origin : 5;*/
 
         public uint flags;
 
@@ -70,7 +80,8 @@ namespace Libgpgme.Interop
         /* The keylist mode that was active when listing the key.  */
         public gpgme_keylist_mode_t keylist_mode;
 
-        internal _gpgme_key() {
+        internal _gpgme_key()
+        {
             _refs = 0;
             flags = 0;
             protocol = gpgme_protocol_t.GPGME_PROTOCOL_UNKNOWN;
@@ -85,105 +96,94 @@ namespace Libgpgme.Interop
             keylist_mode = gpgme_keylist_mode_t.GPGME_KEYLIST_MODE_LOCAL;
         }
 
-        public bool revoked {
-            get => ((flags & 1) > 0);
-            set {
-                if (value) {
-                    flags |= 1;
-                } else {
-                    flags &= (~(uint) 1);
-                }
-            }
+        public bool revoked
+        {
+            get => (flags & 1) > 0;
+            set => flags = value ? flags | 1 : flags & ~1u;
         }
-        public bool expired {
-            get => ((flags & 2) > 0);
-            set {
-                if (value) {
-                    flags |= 2;
-                } else {
-                    flags &= (~(uint) 2);
-                }
-            }
+
+        public bool expired
+        {
+            get => (flags & 2) > 0;
+            set => flags = value ? flags | 2 : flags & ~2u;
         }
-        public bool disabled {
-            get => ((flags & 4) > 0);
-            set {
-                if (value) {
-                    flags |= 4;
-                } else {
-                    flags &= (~(uint) 4);
-                }
-            }
+
+        public bool disabled
+        {
+            get => (flags & 4) > 0;
+            set => flags = value ? flags | 4 : flags & ~4u;
         }
-        public bool invalid {
-            get => ((flags & 8) > 0);
-            set {
-                if (value) {
-                    flags |= 8;
-                } else {
-                    flags &= (~(uint) 8);
-                }
-            }
+
+        public bool invalid
+        {
+            get => (flags & 8) > 0;
+            set => flags = value ? flags | 8 : flags & ~8u;
         }
-        public bool can_encrypt {
-            get => ((flags & 16) > 0);
-            set {
-                if (value) {
-                    flags |= 16;
-                } else {
-                    flags &= (~(uint) 16);
-                }
-            }
+
+        public bool can_encrypt
+        {
+            get => (flags & 16) > 0;
+            set => flags = value ? flags | 16 : flags & ~16u;
         }
-        public bool can_sign {
-            get => ((flags & 32) > 0);
-            set {
-                if (value) {
-                    flags |= 32;
-                } else {
-                    flags &= (~(uint) 32);
-                }
-            }
+
+        public bool can_sign
+        {
+            get => (flags & 32) > 0;
+            set => flags = value ? flags | 32 : flags & ~32u;
         }
-        public bool can_certify {
-            get => ((flags & 64) > 0);
-            set {
-                if (value) {
-                    flags |= 64;
-                } else {
-                    flags &= (~(uint) 64);
-                }
-            }
+
+        public bool can_certify
+        {
+            get => (flags & 64) > 0;
+            set => flags = value ? flags | 64 : flags & ~64u;
         }
-        public bool secret {
-            get => ((flags & 128) > 0);
-            set {
-                if (value) {
-                    flags |= 128;
-                } else {
-                    flags &= (~(uint) 128);
-                }
-            }
+
+        public bool secret
+        {
+            get => (flags & 128) > 0;
+            set => flags = value ? flags | 128 : flags & ~128u;
         }
-        public bool can_authenticate {
-            get => ((flags & 256) > 0);
-            set {
-                if (value) {
-                    flags |= 256;
-                } else {
-                    flags &= (~(uint) 256);
-                }
-            }
+
+        public bool can_authenticate
+        {
+            get => (flags & 256) > 0;
+            set => flags = value ? flags | 256 : flags & ~256u;
         }
-        public bool is_qualified {
-            get => ((flags & 512) > 0);
-            set {
-                if (value) {
-                    flags |= 512;
-                } else {
-                    flags &= (~(uint) 512);
-                }
-            }
+
+        public bool is_qualified
+        {
+            get => (flags & 512) > 0;
+            set => flags = value ? flags | 512 : flags & ~512u;
+        }
+
+        public bool has_encrypt
+        {
+            get => (flags & 1024) > 0;
+            set => flags = value ? flags | 1024 : flags & ~1024u;
+        }
+
+        public bool has_sign
+        {
+            get => (flags & 2048) > 0;
+            set => flags = value ? flags | 2048 : flags & ~2048u;
+        }
+
+        public bool has_certify
+        {
+            get => (flags & 4096) > 0;
+            set => flags = value ? flags | 4096 : flags & ~4096u;
+        }
+
+        public bool has_authenticate
+        {
+            get => (flags & 8192) > 0;
+            set => flags = value ? flags | 8192 : flags & ~8192u;
+        }
+
+        public uint Origin
+        {
+            get => (flags & 0xf8000000) >> 27;
+            set => flags = (flags & ~0xf8000000) | (value << 27);
         }
     }
 }

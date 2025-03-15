@@ -32,6 +32,11 @@ namespace Libgpgme
         public bool CanAuthenticate { get; private set; }
         public bool IsQualified { get; private set; }
         public bool Secret { get; private set; }
+        public bool HasEncrypt { get; private set; }
+        public bool HasSign { get; private set; }
+        public bool HasCertify { get; private set; }
+        public bool HasAuthenticate { get; private set; }
+        public uint Origin { get; private set; }
         public Protocol Protocol { get; private set; }
         public string IssuerSerial { get; private set; }
         public string IssuerName { get; private set; }
@@ -101,6 +106,11 @@ namespace Libgpgme
             CanAuthenticate = key.can_authenticate;
             IsQualified = key.is_qualified;
             Secret = key.secret;
+            HasEncrypt = key.has_encrypt;
+            HasSign = key.has_sign;
+            HasCertify = key.has_certify;
+            HasAuthenticate = key.has_authenticate;
+            Origin = key.Origin;
 
             Protocol = (Protocol) key.protocol;
             OwnerTrust = (Validity) key.owner_trust;
