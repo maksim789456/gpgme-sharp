@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>net40;netcoreapp3.1</TargetFrameworks>
-    <AssemblyVersion>3.0.0-beta1</AssemblyVersion>
-    <FileVersion>3.0.0-beta1</FileVersion>
+    <AssemblyVersion>3.0.0.1</AssemblyVersion>
+    <FileVersion>3.0.0.1</FileVersion>
     <LangVersion>11.0</LangVersion>
     <AssemblyName>gpgme-sharp</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
